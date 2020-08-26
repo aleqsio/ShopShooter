@@ -13,6 +13,8 @@ public class CharacterControl : MonoBehaviour
     private bool _isGrounded;
     private Vector3 _lastPosition;
     public float gravityDelay;
+    private float countdown;
+    public GameObject bombPrefab;
     void Start()
     {
         _controller = GetComponent<CharacterController>();
@@ -30,10 +32,13 @@ public class CharacterControl : MonoBehaviour
             _animator.SetBool("Grounded", true);
             _velocity.y = 0f;
         }else{
-            Debug.Log('x'+Mathf.Abs(_velocity.y)+'y' + (Gravity * Time.deltaTime * 1000));
             _animator.SetBool("Grounded", Mathf.Abs(_velocity.y) < Mathf.Abs(Gravity * Time.deltaTime * gravityDelay));
         }
-        
+        if(Input.GetKeyDown("space") && countdown <0){
+            countdown=30;
+            Instantiate(bombPrefab, this.transform.position, this.transform.rotation);
+        }
+        countdown-=1;
         _velocity.y += Gravity * Time.deltaTime;
         _lastPosition = this.transform.position;
         _controller.Move(_velocity * Time.deltaTime);

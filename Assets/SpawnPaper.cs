@@ -6,6 +6,8 @@ public class SpawnPaper : MonoBehaviour
 {
     public GameObject myPrefab;
     public int count;
+    public int countdown;
+    public int everyNFrames;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,14 +18,14 @@ public class SpawnPaper : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(count>0){
-            count--;
-            if(count%2==0){
 
-            
+        countdown--;
+        if(countdown<0){
+            countdown=everyNFrames;
+            if(count>0){
+            count--;
             Instantiate(myPrefab, this.transform.position, Quaternion.identity);
             }
         }
-
     }
 }
